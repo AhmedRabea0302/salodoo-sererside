@@ -23,7 +23,7 @@ class ParcelGateway {
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array($parcel_id));
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $result = $statement->fetch(\PDO::FETCH_ASSOC);
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());

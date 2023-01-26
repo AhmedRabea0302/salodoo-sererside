@@ -58,7 +58,7 @@ class BikerController {
         }  
 
         http_response_code(200);
-        $response['body'] = json_encode($result);
+        $response['body'] = json_encode(['message' => 'Updated', 'result' => $result]);
         return $response;
     }
 
