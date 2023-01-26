@@ -1,6 +1,8 @@
 <?php
 
 require "../bootstrap.php";
+
+use Src\Controllers\ParcelController;
 use Src\Controllers\UserController;
 
 header("Access-Control-Allow-Origin: *");
@@ -39,6 +41,11 @@ switch ($resource) {
     case  'user':
         // Pass the request method to the UserController and process the HTTP request:
         $controller = new UserController($dbConnection, $requestMethod, $param, $method);
+        $controller->processRequest();
+        break;
+    case 'parcel' :
+        // Pass the request method to the ParcelController and process the HTTP request:
+        $controller = new ParcelController($dbConnection, $requestMethod, $param, $method);
         $controller->processRequest();
         break;
     default:

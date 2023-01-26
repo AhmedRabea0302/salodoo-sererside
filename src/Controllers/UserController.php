@@ -1,7 +1,6 @@
 <?php
 namespace Src\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use Src\Middleware\Authenticate;
 use Src\TableGateways\UserGateway;
 use Src\Validations\UserValidator;
