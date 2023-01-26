@@ -2,6 +2,7 @@
 
 require "../bootstrap.php";
 
+use Src\Controllers\BikerController;
 use Src\Controllers\ParcelController;
 use Src\Controllers\UserController;
 
@@ -47,6 +48,11 @@ switch ($resource) {
         // Pass the request method to the ParcelController and process the HTTP request:
         $controller = new ParcelController($dbConnection, $requestMethod, $param, $method);
         $controller->processRequest();
+        break;
+    case 'biker' :
+        // Pass the request method to the BikerController and process the HTTP request:
+        $controller = new BikerController($dbConnection, $requestMethod, $param, $method);
+        $controller->processRequest();      
         break;
     default:
         http_response_code(404);
