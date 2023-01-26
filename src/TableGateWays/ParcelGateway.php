@@ -9,6 +9,27 @@ class ParcelGateway {
         $this->db = $db;
     }
 
+    public function findParcelDetails($parcel_id)
+    {
+        $statement = "
+            SELECT 
+                p.id, p.parcel_name, p.pickup_address, p.dropoff_address,
+                u.phone_number, u.email, u.name
+            FROM
+                parcels AS p JOIN users AS u 
+            ON u.id = p.user_id
+            WHERE p.id = ?;            
+        ";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array($parcel_id));
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $result;
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+    
     public function findAllParcels($user_id)
     {
         $statement = "
