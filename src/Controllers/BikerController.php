@@ -28,6 +28,9 @@ class BikerController {
             case $this->requestMethod == 'POST' && $this->method == 'updateparcel':
                 $response = $this->updateParcel($this->param);
                 break;
+            case $this->requestMethod == 'GET' && $this->method == 'biker-todolist':
+                $response = $this->getBikerTodoParcels($this->param);
+                break;
             default:
                 $response = $this->notFoundResponse();
                 break;
@@ -36,6 +39,21 @@ class BikerController {
         if ($response['body']) {
             echo $response['body'];
         }
+    }
+
+     private function getBikerTodoParcels($biker_id) {
+
+        $jwtData = (new Authenticate)->authenticate();
+        $id = (int) $jwtData->id;
+        if($id != $biker_id) {
+            http_response_code(401);
+            $response['body'] = json_encode(['message' => 'UnAuthorized']);
+            return $response;
+        }
+        $result = $this->parcelGateWay->findAllBikerToDoParcels($biker_id);
+        http_response_code(200);
+        $response['body'] = json_encode($result);
+        return $response;
     }
 
     private function updateParcel($parcel_id) {

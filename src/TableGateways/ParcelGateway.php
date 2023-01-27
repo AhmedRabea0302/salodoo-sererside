@@ -69,6 +69,26 @@ class ParcelGateway {
         }
     }
     
+    public function findAllBikerToDoParcels($biker_id) {
+        $statement = "
+            SELECT 
+                id, parcel_name, pickup_address,
+                dropoff_address, pickedup_at, dropedoff_at
+            FROM
+                parcels
+            WHERE biker_id = :biker_id
+            ORDER BY dropoff_address;
+        ";
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('biker_id' => $biker_id));
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $result;
+        } catch (\PDOException $e) {
+            echo ($e->getMessage());
+        }
+    }
+    
     public function insert(Array $input)
     {
         $statement = "
