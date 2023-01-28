@@ -46,13 +46,6 @@ class ParcelController {
         }
     }
     private function findParcel($param) {
-        // $jwtData = (new Authenticate)->authenticate();
-        // $user_id = (int) $jwtData->id;
-        // if($param != $user_id) {
-        //     http_response_code(401);
-        //     $response['body'] = json_encode(['message' => 'UnAuthorized']);
-        //     return $response;
-        // }
         $result = $this->parcelGateWay->findParcelDetails($param);
         http_response_code(200);
         $response['body'] = json_encode($result);

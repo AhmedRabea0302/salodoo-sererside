@@ -76,8 +76,8 @@ class ParcelGateway {
                 dropoff_address, pickedup_at, dropedoff_at
             FROM
                 parcels
-            WHERE biker_id = :biker_id
-            ORDER BY dropoff_address;
+            WHERE biker_id = :biker_id AND status = 1
+            ORDER BY dropedoff_at;
         ";
         try {
             $statement = $this->db->prepare($statement);
@@ -88,7 +88,7 @@ class ParcelGateway {
             echo ($e->getMessage());
         }
     }
-    
+
     public function insert(Array $input)
     {
         $statement = "
@@ -122,19 +122,18 @@ class ParcelGateway {
             SET 
                 status = :status        
             WHERE 
-                id = :id AND user_id = :user_id;
+                id = :id;
         ";
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
                 'id' => (int) $id,
-                'user_id' => $input['user_id'],
                 'status' => $input['status']
             ));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }   
     }
 
     public function pickupAndUpdateStatus($id, Array $input)

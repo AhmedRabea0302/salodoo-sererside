@@ -24,9 +24,10 @@ class ParcelValidator {
             && (! isset($input['dropedoff_at']) || $input['dropedoff_at'] == '');
 
         if ((! isset($input['status']) || $input['status'] == '') && $pickup_condition) {
-            array_push($errors, ['parcel_name' => 'Please provide a parcel status']);
+            array_push($errors, ['status' => 'Please provide a parcel status']);
+        }  else {
             return $errors;
-        } 
+        }
 
         if (! isset($input['pickedup_at']) || $input['pickedup_at'] == '') {
             array_push($errors, ['pickedup_at' => 'Please provide Pickup Time']);
